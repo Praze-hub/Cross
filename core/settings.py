@@ -1,6 +1,6 @@
 
 from pathlib import Path
-
+from datetime import timedelta
 import environ
 
 env = environ.Env(
@@ -18,7 +18,6 @@ SECRET_KEY = env("SECRET_KEY")
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '705me&x^#ox$b8oanp#h@xuv=^ykkayxj(5+(gq%#gpr_w(od7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -36,7 +35,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # third party apps
      "rest_framework",
+    "rest_framework.authtoken",
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'django.contrib.sites',
+    'drf_yasg',
+    
+    
     #CustomApps
     'customuser',
 ]
@@ -49,10 +60,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
 AUTH_USER_MODEL = "customuser.User"
+
 
 TEMPLATES = [
     {
@@ -118,9 +131,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # new
+SITE_ID = 1 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None  # No username field in the User model
+ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Use email for authentication
+ACCOUNT_USERNAME_REQUIRED = False  # Username is not required
+ACCOUNT_EMAIL_REQUIRED = True  # Email is required
+ACCOUNT_UNIQUE_EMAIL = True  # Ensure email is unique
+
+   
+
+
 
 LANGUAGE_CODE = 'en-us'
 
@@ -137,3 +159,34 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# In settings.py
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.TokenAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',  # Optional, for session-based authentication
+#     ],
+# }
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+
+
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER': 'customuser.serializers.CustomUserDetailsSerializer',
+}
+
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+}
