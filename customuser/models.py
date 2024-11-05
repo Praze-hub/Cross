@@ -4,7 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from .managers import CustomUserManager
-from .enums import USER_ROLE
+from .enums import UserRole
 import time
 import uuid
 from datetime import datetime
@@ -24,7 +24,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    role = models.CharField(max_length=100, choices=USER_ROLE, default='Driver')
+    role = models.CharField(max_length=100, choices=UserRole.choices(), default=UserRole.DRIVER.value)
     
     
     USERNAME_FIELD = "email"

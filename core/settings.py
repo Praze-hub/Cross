@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # third party apps
-     "rest_framework",
+    "rest_framework",
     "rest_framework.authtoken",
     'rest_auth',
     'rest_auth.registration',
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     
     #CustomApps
     'customuser',
+    'truck',
 ]
 
 MIDDLEWARE = [
@@ -133,6 +134,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # new
 SITE_ID = 1 
+# settings.py
+
 
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None  # No username field in the User model
 ACCOUNT_AUTHENTICATION_METHOD = 'email'  # Use email for authentication
