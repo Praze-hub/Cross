@@ -1,6 +1,10 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import DriverViewSet
+
+router=DefaultRouter()
+router.register('drivers', DriverViewSet, basename='driver')
 
 urlpatterns = [
-    path('home/', views.home_view, name='home'),
+    path('', include(router.urls)),
 ]
