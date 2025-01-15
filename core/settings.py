@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'django.contrib.sites',
     'drf_yasg',
     
@@ -186,11 +187,15 @@ REST_FRAMEWORK = {
     ],
 }
 
-
+ 
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'customuser.serializers.CustomUserDetailsSerializer',
 }
 
+# AUTHENTICATION_BACKENDS = [
+#     'allauth.account.auth_backends.AuthenticationBackend',
+#     'django.contrib.auth.backends.ModelBackend', 
+# ]
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),

@@ -10,6 +10,7 @@ import uuid
 from datetime import datetime
 
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
@@ -25,6 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=100, choices=UserRole.choices(), default=UserRole.DRIVER.value)
+    # auth_provider = models.CharField(max_length=255, blank=False, null=False, default=AUTH_PROVIDERS.get('email'))
     
     
     USERNAME_FIELD = "email"
