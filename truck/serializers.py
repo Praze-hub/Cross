@@ -23,4 +23,12 @@ class DriverSerializer(serializers.ModelSerializer):
             'bank_account_number', 
             'bank_account_name', 
             'verification_status',
+            'user',
         ]
+        
+        read_only_fields = ['user']  # Prevent the user field from being manually set
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        validated_data['user'] = request.user  # Assign the currently authenticated user
+        return super().create(validated_data)
