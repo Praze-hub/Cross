@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Driver, VerificatonStatus
-from truck.enums import IdOptions, VerificatonStatus
+from .models import Driver, Truck
+from truck.enums import IdOptions, VerificatonStatus, TruckStatus
 
 class DriverSerializer(serializers.ModelSerializer):
     user_username = serializers.CharField(source='user.username', read_only=True)
@@ -32,3 +32,20 @@ class DriverSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         validated_data['user'] = request.user  # Assign the currently authenticated user
         return super().create(validated_data)
+    
+    
+class TruckSerializer(serializers.ModelSerializer):
+        status = serializers.ChoiceField(choices=TruckStatus.choices(), read_only=True)
+        
+        class Meta:
+            model = Truck
+            fields = [
+                'truck_name',
+                'license_plate',
+                'model',
+                'status',
+                'year_of_onboarding',
+                'driver'
+            ]
+            
+    

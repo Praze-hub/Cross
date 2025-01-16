@@ -9,6 +9,10 @@ class Driver(models.Model):
             on_delete= models.CASCADE,   
             related_name= 'driver',
         )
+        first_name = models.CharField(max_length=200,null=True, blank=True)
+        last_name = models.CharField(max_length=200, null=True, blank=True)
+        email = models.EmailField(unique=True, null=True, blank=True)
+        phone_number = models.CharField(max_length=20, null=True, blank=True)
         id_number = models.CharField(max_length=20, null=True, blank=True)
         id_type = models.CharField(max_length=100, choices=IdOptions.choices(), default=IdOptions.PASSPORT.value)
         vehicle_reg_no = models.CharField(max_length=20, null=True, blank=True)
