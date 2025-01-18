@@ -40,12 +40,21 @@ class Driver(models.Model):
 
         
 class Truck(models.Model):
+    truck_id = models.CharField(max_length=50, unique=True, null=True, blank=True)
+    location = models.CharField(max_length=255, null=True, blank=True)
     truck_name = models.CharField(max_length=255, unique=True)
     license_plate = models.CharField(max_length=255, unique=True)
     status = models.CharField(max_length=40, choices=TruckStatus.choices(), default=TruckStatus.ACTIVE.value)
     model = models.CharField(max_length = 255)
     year_of_onboarding = models.DateField(auto_now_add=True)
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, related_name="drivers", null=True)
+    capacity = models.DecimalField(
+        max_digits=10,
+        decimal_places=3,
+        help_text="Truck capacity in tons",
+        null=True,
+        blank=True
+    )
     
     def  __str__(self):
         return self.truck_name
