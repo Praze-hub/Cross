@@ -4,6 +4,7 @@ from truck.models import Truck
 
 
 class Task(models.Model):
+    task_id = models.CharField(max_length=50, unique=True)
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     task_type = models.CharField(
@@ -24,7 +25,7 @@ class Task(models.Model):
     )
     location = models.CharField(max_length=255)
     due_date = models.DateTimeField(null=True, blank=True)
-    assigned_to_truck = models.ForeignKey(
+    assigned_to = models.ForeignKey(
         Truck,
         on_delete=models.SET_NULL,
         null=True,
