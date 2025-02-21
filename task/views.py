@@ -39,32 +39,32 @@ class TaskViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(tasks, many=True)
         return Response(serializer.data)
     
-    # @csrf_exempt
-    # @action(
-    #     detail=True, 
-    #     methods=['post'], 
-    #     serializer_class=TaskSerializer, 
-    #     url_path="assign"
-    #     )
-    # def assign(self, request, pk=None):
-    #     task = self.get_object()
-    #     truck_id = request.data.get('assigned_to')
+    @csrf_exempt
+    @action(
+        detail=True, 
+        methods=['post'], 
+        serializer_class=TaskSerializer, 
+        url_path="assign"
+        )
+    def assign(self, request, pk=None):
+        task = self.get_object()
+        truck_id = request.data.get('assigned_to')
 
         
-    #     if not truck_id:
-    #         return Response(
-    #             {"error": "You must provide 'assigned_to' field."},
-    #             status=status.HTTP_400_BAD_REQUEST,
-    #         )
+        if not truck_id:
+            return Response(
+                {"error": "You must provide 'assigned_to' field."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
             
-    #     truck = get_object_or_404(Truck, pk=truck_id)  # Fetch the Truck instance
+        truck = get_object_or_404(Truck, pk=truck_id)  # Fetch the Truck instance
 
-    #     task.assigned_to = truck
-    #     task.save()
-    #     return Response(
-    #         {'detail': 'Task assigned successfully'},
-    #         status=status.HTTP_200_OK,
-    #     )
+        task.assigned_to = truck
+        task.save()
+        return Response(
+            {'detail': 'Task assigned successfully'},
+            status=status.HTTP_200_OK,
+        )
         
     @csrf_exempt
     @action(
@@ -92,5 +92,4 @@ class TaskViewSet(viewsets.ModelViewSet):
             
     
     
-    
-    
+
