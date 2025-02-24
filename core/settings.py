@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     #CustomApps
     'customuser',
     'truck',
-    'task'
+    'task',
+    'maintenance'
 ]
 
 MIDDLEWARE = [
